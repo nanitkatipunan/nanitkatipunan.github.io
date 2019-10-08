@@ -1,2 +1,1 @@
-# nanitkatipunan.github.io
-IOT SWITCH
+# iotSwitch

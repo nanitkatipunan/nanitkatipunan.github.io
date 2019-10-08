@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>MQTT</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<style>
+		#table1 {
+			margin-left: -1%;
+			margin-top: 3%;
+			background-color: #5295c4;
+			height: 300px;
+			overflow-y: scroll;
+		}
+
+		#table3 {
+			margin-left: .5%;
+			margin-top: 3%;
+			background-color: #5295c4;
+			height: 300px;
+			overflow-y: scroll;
+		}
+
+		#table2 {
+			margin-left: .5%;
+			margin-right: .5;
+			margin-top: 3%;
+			background-color: #5295c4;
+			height: 300px;
+			overflow-y: scroll;
+		}
+	</style>
+</head>
+
+<body>
+	<center>
+		<h1>IOT Switch</h1>
+		<p id="status">This device is turned off</p>
+
+
+		<div class="container" style="margin-top: 5%;">
+			<button type="button" class="btn btn-success" id='btnOn' style="width: 100px;">On</button>
+			<button type="button" class="btn btn-success" id='btnOff' style="width: 100px;">Off</button>
+		</div>
+	</center>
+	<script src="scripts/browserMqtt.js"></script>
+	<script src="scripts/controller.js"></script>
+	<script src="scripts/moment.js"></script>
+	<script >
+	var connect = "wss://test.mosquitto.org:8081/mqtt";
+client = mqtt.connect(connect);
+$(document).ready(function () {
+$("#btnOn").click(function (e) {
+e.preventDefault();
+var time = moment().format('MMMM Do YYYY, h:mm:ss a');
+var topic = 'nanit/device/status';
+var payload = 'Turned On: ' + time
+client.publish(topic, payload);
+$("#status").html("The device is currently turned ON");
+})
+$("#btnOff").click(function (e) {
+e.preventDefault();
+var time = moment().format('MMMM Do YYYY, h:mm:ss a');
+var topic = 'nanit/device/status';
+var payload = 'Turned Off: ' + time
+client.publish(topic, payload);
+$("#status").html("The device is currently turned OFF");
+})
+})
+</script>
+</body>
+
+</html>
